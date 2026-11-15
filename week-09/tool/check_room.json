@@ -1,0 +1,46 @@
+{
+  "name": "check_room",
+  "description": "Checks whether a room can be booked for a requested time slot. All times are whole minutes since midnight in the range 0-1440, for example 10:00 is 600 and 24:00 is 1440. Returns Available or Unavailable. This tool only checks: it does not save, create or change any booking.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "start": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1439,
+        "description": "Requested start, whole minutes since midnight"
+      },
+      "end": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1440,
+        "description": "Requested end, whole minutes since midnight (24:00 = 1440)"
+      },
+      "now": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 1440,
+        "description": "Current time, whole minutes since midnight"
+      },
+      "blocked": {
+        "type": "boolean",
+        "description": "True if the room is blocked"
+      },
+      "bookings": {
+        "type": "array",
+        "description": "Existing bookings, may be empty",
+        "items": {
+          "type": "object",
+          "properties": {
+            "start": { "type": "integer", "minimum": 0, "maximum": 1440 },
+            "end": { "type": "integer", "minimum": 0, "maximum": 1440 }
+          },
+          "required": ["start", "end"],
+          "additionalProperties": false
+        }
+      }
+    },
+    "required": ["start", "end", "now", "blocked", "bookings"],
+    "additionalProperties": false
+  }
+}
