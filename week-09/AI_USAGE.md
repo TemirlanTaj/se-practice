@@ -7,7 +7,7 @@ including anything an AI tool produced.
 | Tool | Exact model / plan | Used for | Which files it touched |
 | --- | --- | --- | --- |
 | Claude | Sonnet 5.5 | Part 2 — writing the calls for R1, R2, R3 (one fresh chat per request) | calls/ (saved by me, unedited) |
-| Claude | Sonnet 5.5 | Step-by-step guidance for the lab; drafting tool/check_room.json; explaining which constraint refuses which S case; drafting lab-report.md sections 2, 5 and 6; preparing the R1-R3 prompt files; help with git and PowerShell commands | tool/check_room.json, lab-report.md (sections 2, 5, 6), AI_USAGE.md |
+| Claude | Sonnet 5.5 | Step-by-step guidance for the lab; drafting tool/check_room.json; explaining which constraint refuses which S case; drafting lab-report.md sections 2, 5 and 6; preparing the R1-R3 prompt files; help with git and PowerShell commands; draft of section 10 | tool/check_room.json, lab-report.md (sections 2, 5, 6), AI_USAGE.md |
 
 **I wrote `tool/check_room.json` myself:** no
 An AI wrote it: Claude drafted the whole definition (name, description, the five properties and their constraints) and I used it. I checked it by running tests/check_tool.py: D1-D6 and S01-S12 all passed on the first run.
@@ -21,7 +21,7 @@ The only change to a file in calls/ is the name: the reply to R3 is a question, 
 **Every terminal output in lab-report.md was pasted from a real run, unedited:** yes
 
 **Anything I accepted from the AI without fully understanding it:**
-Yes, I understood everything and discussed everything with AI after completing the task
+No, I understood everything and discussed everything with AI after completing the task
 
 Signed: Tazhibayev Temirlan
 Date: 16.11.2026

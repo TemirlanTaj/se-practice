@@ -162,8 +162,11 @@ AC4 (no overlap, touching allowed): this needs a comparison of the requested sta
 
 ## 7. Checkpoint
 
-<!-- The commit you would make before letting such an agent edit anything: its real SHA (git log --oneline),
-     the exact command that returns you to it, and what that command would throw away. -->
+The checkpoint is commit 8a65395 ("Week 09: tool definition, model calls, report and AI disclosure"), made before letting an agent edit anything. It already holds tool/check_room.json, the three saved calls in calls/, the lab report and AI_USAGE.md, so everything I would hate to lose is saved in it.
+
+Command to return to it: git reset --hard 8a65395
+
+This command would throw away every uncommitted change in my working folder (edited and staged files) and every commit made after 8a65395, so the agent's edits would disappear together with anything I wrote after the checkpoint and did not commit.
 
 ## 8. Checker output
 
@@ -195,26 +198,20 @@ PASS  F4    calls\r2.json: a call to check_room
 PASS  F5    calls\r2.json: arguments valid against your schema
 PASS  F6    calls\r2.json: arguments equal the expected ones (README section 5, Part 2)
 PASS  F7    calls/r3: exactly one of r3.json (it called) or r3.txt (it asked), not empty
-FAIL  L1    section 5 names at least two acceptance criteria (AC1-AC6) the schema cannot check
-             -> found: none
-FAIL  L2    section 6: A1-A8 each have allow / ask / block and a reason of 5+ words
-             -> A1 decision, A2 decision, A3 decision, A4 decision, A5 decision, A6 decision, A7 decision, A8 decision
-FAIL  L3    section 7 names the checkpoint commit (a SHA)
-             -> no 7-40 character commit hash in section 7
-FAIL  L4    section 10: a conclusion of 80-150 words
-             -> 0 words
-FAIL  L5    AI_USAGE.md filled in (a tool row, and signed)
-             -> not signed
+PASS  L1    section 5 names at least two acceptance criteria (AC1-AC6) the schema cannot check
+PASS  L2    section 6: A1-A8 each have allow / ask / block and a reason of 5+ words
+PASS  L3    section 7 names the checkpoint commit (a SHA)
+PASS  L4    section 10: a conclusion of 80-150 words
+PASS  L5    AI_USAGE.md filled in (a tool row, and signed)
 
-SUMMARY: 25 PASS ╖ 5 FAIL ╖ 0 ERROR  (of 30 checks)
+SUMMARY: 30 PASS ╖ 0 FAIL ╖ 0 ERROR  (of 30 checks)
 Paste this whole output into lab-report.md section 8, and these three numbers into submission.yml.
 ```
 
 ## 9. What still fails
 
-<!-- Every check in submission.yml known_fails, with the reason. "None" if all 30 pass. -->
+None
 
 ## 10. Conclusion (80–150 words)
 
-<!-- What did you learn about the line between the schema, the model and the function? Be specific:
-     name a case, a request or an action. "Tool definitions are important" is worth nothing. -->
+The schema validates shape, the model translates language into numbers, and only `canBook` decides meaning. The schema rejected all nine malformed calls via `"type": "integer"`, such as S03 (`"11:00"` as a string) and S10 (`600.5`), yet it would still accept `start = 600` and `end = 600`, since that shape is valid. R2 shows the same: the model correctly produced `end = 990` and `blocked = true`, the call was valid, and only `canBook` returned Unavailable under AC3. In R3, the model asked a clarifying question instead of inventing `now`, `start`, and `end`, but missed that "tomorrow" cannot be expressed as minutes within one day. For A7 (push to main) and A8 (sending `.env`), the risk lies outside any schema, so I block them.
